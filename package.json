@@ -8,7 +8,7 @@
     "build:data": "node scripts/build-genealogy.mjs && node scripts/augment-genealogy-metadata.mjs && node scripts/build-tree-data.mjs && node scripts/build-events-places.mjs && node scripts/build-media.mjs && node scripts/build-og-images.mjs",
     "build": "npm run build:data && astro build && node scripts/copy-demos.mjs",
     "preview": "astro preview",
-    "check": "node --check scripts/build-og-images.mjs && node scripts/check-person-title-spacing.mjs && node scripts/check-tree-overview-mode.mjs && astro check"
+    "check": "node --check scripts/build-og-images.mjs && node scripts/check-og-card-rules.mjs && node scripts/check-person-title-spacing.mjs && node scripts/check-tree-overview-mode.mjs && astro check"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.6",
@@ -19,6 +19,7 @@
     "elkjs": "0.12.0",
     "maplibre-gl": "5.24.0",
     "photoswipe": "5.4.4",
+    "sharp": "^0.35.4",
     "vue": "^3.5.22",
     "yaml": "^2.8.1"
   },
