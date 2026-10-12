@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "npm run build:data && astro dev",
-    "build:data": "node scripts/build-genealogy.mjs && node scripts/augment-genealogy-metadata.mjs && node scripts/build-tree-data.mjs && node scripts/build-events-places.mjs && node scripts/build-media.mjs",
+    "build:data": "node scripts/build-genealogy.mjs && node scripts/augment-genealogy-metadata.mjs && node scripts/build-tree-data.mjs && node scripts/build-events-places.mjs && node scripts/build-media.mjs && node scripts/build-og-images.mjs",
     "build": "npm run build:data && astro build && node scripts/copy-demos.mjs",
     "preview": "astro preview",
-    "check": "node scripts/check-person-title-spacing.mjs && astro check"
+    "check": "node --check scripts/build-og-images.mjs && node scripts/check-person-title-spacing.mjs && astro check"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.6",
     "@balkangraph/familytree.js": "1.9.51",
+    "@resvg/resvg-js": "^2.6.2",
     "@vue-flow/core": "1.48.2",
     "astro": "^7.3.8",
     "elkjs": "0.12.0",
