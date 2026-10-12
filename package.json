@@ -8,7 +8,7 @@
     "build:data": "node scripts/build-genealogy.mjs && node scripts/augment-genealogy-metadata.mjs && node scripts/build-tree-data.mjs && node scripts/build-events-places.mjs && node scripts/build-media.mjs",
     "build": "npm run build:data && astro build && node scripts/copy-demos.mjs",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "node scripts/check-person-title-spacing.mjs && astro check"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.6",
