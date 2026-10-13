@@ -5,11 +5,11 @@ import { buildPeopleSidebar } from './scripts/starlight-people-sidebar.mjs';
 const peopleSidebar = buildPeopleSidebar();
 
 export default defineConfig({
-  site: 'https://genealogy-antiokh.pages.dev',
+  site: process.env.GENEALOGY_SITE_URL || 'https://genealogy-engine.example',
   integrations: [
     starlight({
-      title: 'Семейная энциклопедия',
-      description: 'Люди, события, места и источники семейной истории',
+      title: process.env.GENEALOGY_SITE_TITLE || 'Genealogy Engine',
+      description: process.env.GENEALOGY_SITE_DESCRIPTION || 'Structured genealogy encyclopedia engine',
       routeMiddleware: './src/routeData.ts',
       customCss: [
         './src/styles/genealogy.css',
@@ -28,11 +28,11 @@ export default defineConfig({
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/Antiokh/genealogy-library',
+          href: 'https://github.com/Antiokh/genealogy-engine',
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/Antiokh/genealogy-library/edit/main/',
+        baseUrl: 'https://github.com/Antiokh/genealogy-engine/edit/main/',
       },
       components: {
         Head: './src/components/GenealogyHead.astro',
