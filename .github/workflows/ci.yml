@@ -19,6 +19,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --progress=false
+      - run: node --check scripts/sync-engine-to-content.mjs
       - run: npm run check
       - run: npm run build
 
