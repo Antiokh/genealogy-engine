@@ -75,6 +75,26 @@ try {
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
+// First sync must not silently overwrite edits made after the repositories split.
+// Files written by a previous successful sync are identified by the manifest.
+if (previous.length === 0) {
+  const diverged = [];
+  for (const name of next) {
+    try {
+      const existing = await readFile(resolve(targetRoot, name));
+      const source = await readFile(resolve(engineRoot, name));
+      if (!existing.equals(source)) diverged.push(name);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  if (diverged.length) {
+    throw new Error(
+      'Refusing first-time sync: reconcile modified engine-owned files in the content repo first:\\n' +
+      diverged.map(name => '  ' + name).join('\\n')
+    );
+  }
+}
 const current = new Set(next);
 for (const name of previous) {
   if (!current.has(name)) await rm(resolve(targetRoot, name), { force: true });
