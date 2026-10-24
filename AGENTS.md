@@ -21,7 +21,7 @@ This repository is the **public, reusable application engine**. Its canonical si
 
 1. Open or update a PR **in this repository** for changes to shared engine files.
 2. Run `npm ci`, `npm run check`, and `npm run build` with synthetic data. The `Engine CI` workflow verifies PRs.
-3. After merge to `main` and successful CI, `.github/workflows/ci.yml` uses the repository secret `GENEALOGY_CONTENT_PUSH_TOKEN` to synchronize **only** allowlisted engine files into `Antiokh/genealogy-antiokh/main`.
+3. After merge to `main` and successful CI, `.github/workflows/ci.yml` uses the repository secret `GENEALOGY_CONTENT_PUSH_TOKEN` to synchronize **only** allowlisted engine files into `Antiokh/genealogy-antiokh/main`. This job is restricted to the canonical `Antiokh/genealogy-engine`, not forks.
 4. The sync creates/updates `.genealogy-engine-managed.json` in the site repository. Do not edit this manifest by hand or broaden the allowlist without reviewing the destination paths and initial-diff protection.
 5. Check the resulting `genealogy-engine[bot]` commit and the site's build/Cloudflare deployment before declaring a release complete. GitHub CI success alone does not prove deployment.
 
@@ -32,6 +32,12 @@ The site owns `scripts/check-public-person-catalog.mjs`, whose examples reflect 
 The sync does **not** transfer `astro.config.mjs`, `package.json`, lockfiles, `src/assets/`, `src/content/docs/`, `demos/`, `imports/`, `research/`, or site-only workflows/scripts. If an engine change requires configuration, dependencies, or new routes in the production site, make a **separate reviewed change** in `Antiokh/genealogy-antiokh` as part of the same task. Do not assume the auto-sync covers it.
 
 For a content or editorial request, work in `Antiokh/genealogy-antiokh` instead. Do not copy real data into this public engine to reproduce a bug; use sanitized/synthetic fixtures.
+
+## Local statistics badges
+
+- `scripts/generate-site-badges.mjs` is owned here and synchronized to the production site. All builds emit `dist/badges/` and `dist/site-stats.json` from local generated datasets.
+- The engine README links to repo-local `badges/*.svg` snapshot files, refreshed by the `refresh-readme-badges` GitHub Actions job on `main`; in forks those counts must reflect fork data, never the personal site's values.
+- Badge SVG snapshots in this repo are not engine-managed copies for the family site.
 
 ## General agent workflow
 
