@@ -2,14 +2,16 @@
 
 [![Engine CI](https://github.com/Antiokh/genealogy-engine/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Antiokh/genealogy-engine/actions/workflows/ci.yml)
 [![Сайт: Семейная энциклопедия](https://img.shields.io/badge/%D1%81%D0%B0%D0%B9%D1%82-tree.antiokh.ru-795138)](https://tree.antiokh.ru/)
-[![Люди](https://tree.antiokh.ru/badges/people.svg)](https://tree.antiokh.ru/people/)
-[![События](https://tree.antiokh.ru/badges/events.svg)](https://tree.antiokh.ru/events/)
-[![Места](https://tree.antiokh.ru/badges/places.svg)](https://tree.antiokh.ru/places/)
-[![Фото](https://tree.antiokh.ru/badges/photos.svg)](https://github.com/Antiokh/genealogy-antiokh/tree/main/src/content/docs/media)
+[![Люди](badges/people.svg)](src/content/docs/people/)
+[![События](badges/events.svg)](src/content/docs/events/)
+[![Места](badges/places.svg)](src/content/docs/places/)
+[![Фото](badges/photos.svg)](src/content/docs/media/)
 
 **Открытый движок генеалогической энциклопедии** на Astro и Starlight: страницы людей и событий, семейная навигация, родственные связи, визуализация дерева, карты, фотогалереи и оформление под архивный альбом.
 
 В этом репозитории находятся приложение, компоненты, стили, графовые алгоритмы и генераторы. **Настоящие биографии, фотографии, источники и импорты живут в отдельном репозитории**. Здесь для разработки используется небольшой синтетический набор людей.
+
+Четыре бейджа выше показывают **содержимое именно этого репозитория**, а не личной энциклопедии. Они берутся из собранных данных; в форке счётчики можно обновить по его собственным записям. [Бейджи семейной энциклопедии](https://github.com/Antiokh/genealogy-antiokh#readme) независимы.
 
 ## Два репозитория — один сайт
 
@@ -70,6 +72,13 @@ npm run preview      # локальный просмотр результата
 ```
 
 Перед PR рекомендуется выполнять `npm ci`, `npm run check` и `npm run build`. Этот же контракт выполняется в [Engine CI](.github/workflows/ci.yml).
+
+### Счётчики в форках
+
+При `npm run build` движок формирует `dist/badges/{people,events,places,photos}.svg` и `dist/site-stats.json` из собственных проверенных `public/generated/*.json`. Люди, события и места считаются по сущностям; фото — по медиа-записям типа `photo` (не по всем изображениям в Git).
+
+Для **README на GitHub** эти SVG дополнительно хранятся в `badges/`: после успешного push в `main` [Engine CI](.github/workflows/ci.yml) автоматически обновляет их и коммитит новые значения. Поэтому относительные ссылки выше работают и в форках, не требуя домена `tree.antiokh.ru`. Если GitHub Actions в форке отключены, включите их; для автоматического обновления файлов `badges/` workflow-токену может потребоваться разрешение **Contents: Read and write** в настройках Actions. Синхронизация с личным репозиторием `genealogy-antiokh` запускается **только в исходном Antiokh/genealogy-engine**, а в форках пропускается.
+
 
 ## Как устроена сборка
 
