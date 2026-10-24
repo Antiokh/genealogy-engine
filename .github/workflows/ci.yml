@@ -19,5 +19,50 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci --progress=false
+      - run: node --check scripts/sync-engine-to-content.mjs
       - run: npm run check
       - run: npm run build
+
+  sync-content:
+    name: Sync verified engine to family site
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      SYNC_TOKEN: ${{ secrets.GENEALOGY_CONTENT_PUSH_TOKEN }}
+    steps:
+      - name: Require a scoped write token
+        run: |
+          if [ -z "$SYNC_TOKEN" ]; then
+            echo "::error::Configure GENEALOGY_CONTENT_PUSH_TOKEN with Contents read/write for Antiokh/genealogy-antiokh."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          path: genealogy-engine
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: Antiokh/genealogy-antiokh
+          ref: main
+          path: genealogy-content
+          token: ${{ secrets.GENEALOGY_CONTENT_PUSH_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: genealogy-engine/.nvmrc
+      - name: Update only engine-owned paths
+        run: node genealogy-engine/scripts/sync-engine-to-content.mjs genealogy-content
+      - name: Commit and push engine files
+        working-directory: genealogy-content
+        run: |
+          git config user.name "genealogy-engine[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all -- .genealogy-engine-managed.json src/components src/styles src/scripts src/pages src/content.config.ts src/routeData.ts public/tree scripts
+          if git diff --cached --quiet; then
+            echo "Engine content already up to date."
+            exit 0
+          fi
+          git commit -m "chore(engine): sync verified ${GITHUB_SHA}"
+          git push origin HEAD:main
