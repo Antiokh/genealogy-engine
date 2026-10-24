@@ -2,6 +2,10 @@
 
 [![Engine CI](https://github.com/Antiokh/genealogy-engine/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Antiokh/genealogy-engine/actions/workflows/ci.yml)
 [![Сайт: Семейная энциклопедия](https://img.shields.io/badge/%D1%81%D0%B0%D0%B9%D1%82-tree.antiokh.ru-795138)](https://tree.antiokh.ru/)
+[![Люди](https://tree.antiokh.ru/badges/people.svg)](https://tree.antiokh.ru/people/)
+[![События](https://tree.antiokh.ru/badges/events.svg)](https://tree.antiokh.ru/events/)
+[![Места](https://tree.antiokh.ru/badges/places.svg)](https://tree.antiokh.ru/places/)
+[![Фото](https://tree.antiokh.ru/badges/photos.svg)](https://github.com/Antiokh/genealogy-antiokh/tree/main/src/content/docs/media)
 
 **Открытый движок генеалогической энциклопедии** на Astro и Starlight: страницы людей и событий, семейная навигация, родственные связи, визуализация дерева, карты, фотогалереи и оформление под архивный альбом.
 
