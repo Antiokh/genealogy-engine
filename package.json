@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "npm run build:data && astro dev",
     "build:data": "node scripts/build-genealogy.mjs && node scripts/augment-genealogy-metadata.mjs && node scripts/build-tree-data.mjs && node scripts/build-events-places.mjs && node scripts/build-media.mjs && node scripts/build-og-images.mjs",
-    "build": "npm run build:data && astro build && node scripts/copy-demos.mjs",
+    "build": "npm run build:data && astro build && node scripts/generate-site-badges.mjs && node scripts/copy-demos.mjs",
     "preview": "astro preview",
-    "check": "node --check scripts/build-og-images.mjs && node scripts/check-og-card-rules.mjs && node scripts/check-person-title-spacing.mjs && node scripts/check-public-person-catalog.mjs && node scripts/check-tree-overview-mode.mjs && astro check"
+    "check": "node --check scripts/generate-site-badges.mjs && node --check scripts/build-og-images.mjs && node scripts/check-og-card-rules.mjs && node scripts/check-person-title-spacing.mjs && node scripts/check-public-person-catalog.mjs && node scripts/check-tree-overview-mode.mjs && astro check"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.6",
