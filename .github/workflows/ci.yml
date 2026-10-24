@@ -24,7 +24,7 @@ jobs:
       - run: npm run build
 
   sync-content:
-    name: Sync verified engine to private content
+    name: Sync verified engine to family site
     needs: verify
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -33,17 +33,10 @@ jobs:
     env:
       SYNC_TOKEN: ${{ secrets.GENEALOGY_CONTENT_PUSH_TOKEN }}
     steps:
-      - name: Require a private target and scoped write token
-        env:
-          GH_TOKEN: ${{ secrets.GENEALOGY_CONTENT_PUSH_TOKEN }}
+      - name: Require a scoped write token
         run: |
           if [ -z "$SYNC_TOKEN" ]; then
             echo "::error::Configure GENEALOGY_CONTENT_PUSH_TOKEN with Contents read/write for Antiokh/genealogy-antiokh."
-            exit 1
-          fi
-          IS_PRIVATE=$(gh api repos/Antiokh/genealogy-antiokh --jq '.private')
-          if [ "$IS_PRIVATE" != "true" ]; then
-            echo "::error::Refusing to sync: Antiokh/genealogy-antiokh is PUBLIC. Make the content repository private first."
             exit 1
           fi
       - uses: actions/checkout@v4
