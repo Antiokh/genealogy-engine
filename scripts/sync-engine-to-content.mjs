@@ -35,6 +35,7 @@ const ownedFiles = [
   'scripts/build-media.mjs',
   'scripts/build-og-images.mjs',
   'scripts/build-tree-data.mjs',
+  'scripts/generate-site-badges.mjs',
   'scripts/check-og-card-rules.mjs',
   'scripts/check-person-title-spacing.mjs',
   'scripts/check-tree-overview-mode.mjs',
