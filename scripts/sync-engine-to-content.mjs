@@ -1,6 +1,6 @@
 /**
  * Apply the explicitly engine-owned files from this PUBLIC repo to a
- * checked-out PRIVATE genealogy content repository.
+ * checked-out family content repository.
  *
  * Never sync content, private imports, site settings, or generated assets.
  * Files removed from this engine are only removed if the previous manifest
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 const engineRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const targetRoot = resolve(process.argv[2] || '');
 if (!process.argv[2] || targetRoot === engineRoot || targetRoot.startsWith(engineRoot + sep)) {
-  throw new Error('Pass a separate checked-out private content repository as the target.');
+  throw new Error('Pass a separate checked-out family content repository as the target.');
 }
 const manifestName = '.genealogy-engine-managed.json';
 
@@ -37,7 +37,6 @@ const ownedFiles = [
   'scripts/build-tree-data.mjs',
   'scripts/check-og-card-rules.mjs',
   'scripts/check-person-title-spacing.mjs',
-  'scripts/check-public-person-catalog.mjs',
   'scripts/check-tree-overview-mode.mjs',
   'scripts/copy-demos.mjs',
   'scripts/starlight-people-sidebar.mjs',
