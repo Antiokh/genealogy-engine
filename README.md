@@ -75,7 +75,7 @@ npm run preview      # локальный просмотр результата
 
 ### Счётчики в форках
 
-При `npm run build` движок формирует `dist/badges/{people,events,places,photos}.svg` и `dist/site-stats.json` из собственных проверенных `public/generated/*.json`. Люди, события и места считаются по сущностям; фото — по медиа-записям типа `photo` (не по всем изображениям в Git).
+При `npm run build` движок формирует `dist/badges/{people,events,places,photos}.svg` и `dist/site-stats.json` из собственных проверенных `public/generated/*.json`. Люди, события и места считаются по сущностям; фото — по уникальным локальным изображениям в `src/content/docs/{people,media}/` (одинаковые портреты и медиа-файлы не считаются дважды; внешние URL не учитываются).
 
 Для **README на GitHub** эти SVG дополнительно хранятся в `badges/`: после успешного push в `main` [Engine CI](.github/workflows/ci.yml) автоматически обновляет их и коммитит новые значения. Поэтому относительные ссылки выше работают и в форках, не требуя домена `tree.antiokh.ru`. Если GitHub Actions в форке отключены, включите их; для автоматического обновления файлов `badges/` workflow-токену может потребоваться разрешение **Contents: Read and write** в настройках Actions. Синхронизация с личным репозиторием `genealogy-antiokh` запускается **только в исходном Antiokh/genealogy-engine**, а в форках пропускается.
 
