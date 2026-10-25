@@ -16,7 +16,8 @@
 /* Album hardware: shared engine-controlled WebP assets live in public/textures.
    Dark portraits use individual antique-brass oak brackets; the light theme
    cuts paired curved paper slots into the corners of the image mount. */
-html :is(.person-portrait::before, .person-portrait::after) {
+html .person-portrait::before,
+html .person-portrait::after {
   display: none !important;
 }
 
