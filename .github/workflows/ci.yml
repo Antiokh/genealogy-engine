@@ -96,7 +96,7 @@ jobs:
         run: |
           git config user.name "genealogy-engine[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add --all -- .genealogy-engine-managed.json src/components src/styles src/scripts src/pages src/content.config.ts src/routeData.ts public/tree scripts
+          git add --all -- .genealogy-engine-managed.json src/components src/styles src/scripts src/pages src/content.config.ts src/routeData.ts public/tree public/textures scripts
           if git diff --cached --quiet; then
             echo "Engine content already up to date."
             exit 0

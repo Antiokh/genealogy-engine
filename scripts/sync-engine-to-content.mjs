@@ -25,6 +25,7 @@ const ownedDirectories = [
   'src/scripts',
   'src/pages',
   'public/tree',
+  'public/textures',
 ];
 const ownedFiles = [
   'src/routeData.ts',
