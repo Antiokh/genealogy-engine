@@ -38,6 +38,7 @@ export default defineConfig({
       components: {
         Head: './src/components/GenealogyHead.astro',
         Header: './src/components/GenealogyHeader.astro',
+        TwoColumnContent: './src/components/GenealogyTwoColumnContent.astro',
         PageTitle: './src/components/GenealogyPageTitle.astro',
         Footer: './src/components/GenealogyFooter.astro',
       },
