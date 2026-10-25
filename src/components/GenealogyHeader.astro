@@ -238,25 +238,33 @@ import GenealogyThemeSwitch from './GenealogyThemeSwitch.astro';
       pointer-events: none;
     }
 
-    /* Light: the same warm paper gradient and inset edge as the left menu. */
+    /* The restore tab lives inside Header. Its --sl-color-* tokens inherit
+       the dark header's light-on-dark palette, even when fixed over the page.
+       Use the paper theme's independent genealogy tokens instead. */
     :global(html[data-theme='light']) .toc-restore {
-      --genea-toc-edge-color: #d6c29b;
-      border-color: rgb(87 53 31 / 18%);
+      right: 0;
+      border-color: var(--genea-line-strong);
       background: linear-gradient(
         90deg,
         var(--genea-paper-high) 0%,
-        var(--genea-paper) calc(100% - 0.95rem),
+        var(--genea-paper) calc(100% - 1.1rem),
         #d6c29b 100%
       );
-      color: var(--sl-color-gray-2);
+      color: var(--genea-text);
       box-shadow:
         inset -1px 0 0 rgb(87 53 31 / 18%),
-        inset -18px 0 28px -30px rgb(66 35 18 / 55%);
+        inset -18px 0 28px -30px rgb(66 35 18 / 70%);
+    }
+
+    /* No separate rectangular tail in light mode: the paper tab attaches
+       directly to the page edge, like the left sidebar does. */
+    :global(html[data-theme='light']) .toc-restore::after {
+      display: none;
     }
 
     :global(html[data-theme='light']) .toc-restore__arrow {
-      background: rgb(152 74 36 / 10%);
-      color: var(--sl-color-text-accent);
+      background: rgb(152 74 36 / 11%);
+      color: var(--genea-copper-text);
     }
 
     /* Dark: transition from the leather-like tab into the dark scroll track. */
@@ -287,8 +295,8 @@ import GenealogyThemeSwitch from './GenealogyThemeSwitch.astro';
 
     :global(html[data-theme='light']) .toc-restore:hover,
     :global(html[data-theme='light']) .toc-restore:focus-visible {
-      border-color: rgb(152 74 36 / 42%);
-      color: var(--sl-color-text-accent);
+      border-color: color-mix(in srgb, var(--genea-copper) 55%, var(--genea-line-strong));
+      color: var(--genea-copper-text);
     }
 
     :global(html[data-theme='dark']) .toc-restore:hover,
