@@ -86,6 +86,17 @@ assert.match(personMap, /mountMapYearRange\(rangeControl, eventsForPerson, photo
 assert.match(personMap, /mapEventsInYears\(eventsForPerson/, 'person map filters its events');
 assert.match(personMap, /mapPhotosInYears\(photosForPerson/, 'person map filters photos');
 assert.match(yearStyle, /\.event-range__track/, 'both maps share the year slider styles');
+assert.match(yearStyle, /bottom:\s*max\(0\.65rem, env\(safe-area-inset-bottom\)\)/, 'slider is docked to the safe bottom of the map');
+assert.match(yearStyle, /display:\s*flex/, 'year label and controls share one compact row');
+assert.match(yearStyle, /map-shell:has\(\.event-range:not\(\[hidden\]\)\) \.genealogy-map-layer-switch/, 'full-map layer switch stays above the visible slider');
+assert.match(yearStyle, /person-map-canvas:has\(\.event-range:not\(\[hidden\]\)\) \.genealogy-map-layer-switch/, 'personal layer switch stays above the visible slider');
+assert.match(yearStyle, /transform:\s*translateY\(-50%\)/, 'year handles stay vertically centered');
+assert.match(yearScript, /label\.value = years/, 'compact slider shows only the years');
+assert.match(yearScript, /label\.setAttribute\('aria-label', `Временной интервал:/, 'full accessible range label remains');
+assert(!fullPage.includes('genealogy-map-top-panels'), 'full-map range is no longer under the title');
+assert(!personMap.includes('genealogy-map-top-panels'), 'person-map range is no longer under the title');
+assert.match(fullPage, /class="event-range" data-range-control/, 'full-map slider remains mounted');
+assert.match(personMap, /class="event-range" data-range-control/, 'personal slider remains mounted');
 assert.match(personMap, /События жизни/, 'person map title includes the full name');
 assert.match(personMap, /new MapOverviewControl/, 'person map gets a reset-bounds control');
 assert.match(personMap, /new maplibregl\.FullscreenControl\(\{ container: canvas \}\)/, 'person map fullscreen targets the map itself');
