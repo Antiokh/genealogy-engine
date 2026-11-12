@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { formatMapDate, groupMapRecords } from '../src/scripts/map-popup.ts';
 
 const events = [{
@@ -32,4 +33,28 @@ assert(exact.some((group) => group.key === 'photo:school/photo.md'));
 assert.equal(formatMapDate({ year: 1901, circa: true }), 'ок. 1901');
 assert.equal(formatMapDate({ year: 1999, month: 5, day: 3 }), '3.5.1999');
 
-console.log('Map popup grouping checks passed.');
+// Protect the separate full-map year slider when reusing the personal map chrome.
+const readSource = (file) => readFile(new URL(file, import.meta.url), 'utf8');
+const [fullPage, fullRenderer, personMap, controls, titleStyles] = await Promise.all([
+  readSource('../src/pages/events/map-renderer.astro'),
+  readSource('../src/scripts/event-map-renderer.ts'),
+  readSource('../src/components/PersonPlacesMap.astro'),
+  readSource('../src/scripts/map-controls.ts'),
+  readSource('../src/styles/map-controls.css'),
+]);
+
+assert.match(fullPage, /data-map-title/, 'full map keeps its title tab');
+for (const control of ['data-range-control', 'data-range-from', 'data-range-to', 'data-range-track', 'data-range-label']) {
+  assert(fullPage.includes(control), `full map retains its year slider: ${control}`);
+}
+assert.match(fullRenderer, /rangeFrom\.addEventListener\('input', updateRange\)/, 'full-map slider is wired');
+assert.match(fullRenderer, /rangeTo\.addEventListener\('input', updateRange\)/, 'both year handles are wired');
+assert.match(fullRenderer, /FullscreenControl/, 'full-map fullscreen remains');
+assert.match(fullRenderer, /MapOverviewControl/, 'full-map overview remains');
+assert.match(personMap, /data-map-title/, 'person map has a built-in title tab');
+assert.match(personMap, /События жизни/, 'person map title includes the full name');
+assert.match(personMap, /new MapOverviewControl/, 'person map gets a reset-bounds control');
+assert.match(personMap, /new maplibregl\.FullscreenControl\(\{ container: canvas \}\)/, 'person map fullscreen targets the map itself');
+assert.match(controls, /aria-label/, 'overview control is accessible');
+assert.match(titleStyles, /person-map-canvas:fullscreen/, 'person map expands to the viewport');
+console.log('Map popup and map UI checks passed.');
