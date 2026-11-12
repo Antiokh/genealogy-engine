@@ -264,13 +264,13 @@ const partnerItems = (route.entry.data.partners || []).map((partner) => {
     married ? `брак ${married}${marriedPlace ? ` (${marriedPlace.label})` : ''}` : undefined,
     divorced ? `развод ${divorced}` : undefined,
   ].filter(Boolean).join('; ');
-  const formalMarriage = typeof partner !== 'string'
-    && Boolean(partner.married)
-    && partner.married?.known !== false;
-  return { ...personLink(ref), details, formalMarriage };
+  // An absent marriage date does not prove that a union was unregistered.
+  // Hide only relationships explicitly marked as unregistered in their record.
+  const unregistered = typeof partner !== 'string' && partner.unionType === 'unregistered';
+  return { ...personLink(ref), details, unregistered };
 }).filter((value): value is NonNullable<typeof value> => Boolean(value));
-const spouseItems = partnerItems.filter((item) => item.formalMarriage);
-const unmarriedPartnerItems = partnerItems.filter((item) => !item.formalMarriage);
+const spouseItems = partnerItems.filter((item) => !item.unregistered);
+const unmarriedPartnerItems = partnerItems.filter((item) => item.unregistered);
 
 const childEntries = personRef
   ? personEntries.filter((entry) => personParentRefs(entry).includes(ownRef || ''))
