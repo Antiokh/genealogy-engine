@@ -88,6 +88,9 @@ assert.match(personMap, /mapPhotosInYears\(photosForPerson/, 'person map filters
 assert.match(yearStyle, /\.event-range__track/, 'both maps share the year slider styles');
 assert.match(yearStyle, /bottom:\s*max\(0\.65rem, env\(safe-area-inset-bottom\)\)/, 'slider is docked to the safe bottom of the map');
 assert.match(yearStyle, /display:\s*flex/, 'year label and controls share one compact row');
+assert.match(yearStyle, /\.maplibregl-ctrl-bottom-right:has\(\.maplibregl-ctrl-attrib\.maplibregl-compact-show\)/, 'expanded right attribution clears the year dock');
+assert.match(yearStyle, /\.maplibregl-ctrl-bottom-left:has\(\.maplibregl-ctrl-attrib\.maplibregl-compact-show\)/, 'expanded left attribution clears the year dock');
+assert.match(yearStyle, /z-index:\s*12/, 'expanded map license has higher stacking priority than the year slider');
 assert.match(yearStyle, /map-shell:has\(\.event-range:not\(\[hidden\]\)\) \.genealogy-map-layer-switch/, 'full-map layer switch stays above the visible slider');
 assert.match(yearStyle, /person-map-canvas:has\(\.event-range:not\(\[hidden\]\)\) \.genealogy-map-layer-switch/, 'personal layer switch stays above the visible slider');
 assert.match(yearStyle, /transform:\s*translateY\(-50%\)/, 'year handles stay vertically centered');
